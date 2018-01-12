@@ -33,6 +33,18 @@ Username Column: user_login
 Password Column: user_pass
 Encryption Type: Joomla > 2.5.18 phppass
 ```
+
+### WordPress (PrivateContent Plugin)
+Thanks to this app, NextCloud can easily integrate with Wordpress PrivateContent Plugin.
+
+In the Column Setting of SQL User Backend, configure it as
+```
+Table: wp_pc_users
+Username Column: username
+Password Column: psw
+Encryption Type: WP PrivateContent Plugin
+User Active Column: status
+```
 ## Features
 Currently, it supports most of postfixadmin's encryption options, except dovecot and saslauthd.
 It was tested and developed for a postfixadmin database.

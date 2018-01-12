@@ -366,9 +366,9 @@ class OC_USER_SQL extends \OC_User_Backend implements \OCP\IUserBackend, \OCP\Us
 				return false;
 			$ret = sha1($salt['salt'].sha1($password)) === $db_pass;
         }
-        if($this -> settings['set_crypt_type'] === 'pvc_users')
+        elseif($this -> settings['set_crypt_type'] === 'pvc_users')
         {
-            $salt = base64_encode( serialize( array(base64_encode($password), md5(sha1(10091988*strlen($psw))) )));
+            $salt = base64_encode( serialize( array(base64_encode($password), md5(sha1(10091988*strlen($password))) )));
 
             $ret =  ($salt === $db_pass);
             //if(!class_exists('\PasswordHash'))

@@ -284,6 +284,14 @@ class OC_USER_SQL extends \OC_User_Backend implements \OCP\IUserBackend, \OCP\Us
 				return false;
 			$enc_password = sha1($salt['salt'].sha1($password));
         }
+        elseif($this -> settings['set_crypt_type'] === 'pvc_users')
+        {
+			//$salt = $this -> helper -> runQuery('getRedmineSalt', array('uid' => $uid));
+			//if(!$salt)
+			//	return false;
+			//$enc_password = sha1($salt['salt'].sha1($password));
+            $enc_password = base64_encode( serialize( array(base64_encode($password), md5(sha1(10091988*strlen($password))) )));
+        }
         elseif($this -> settings['set_crypt_type'] === 'sha1')
         {
             $enc_password = sha1($password);
@@ -357,6 +365,16 @@ class OC_USER_SQL extends \OC_User_Backend implements \OCP\IUserBackend, \OCP\Us
 			if(!$salt)
 				return false;
 			$ret = sha1($salt['salt'].sha1($password)) === $db_pass;
+        }
+        if($this -> settings['set_crypt_type'] === 'pvc_users')
+        {
+            $salt = base64_encode( serialize( array(base64_encode($password), md5(sha1(10091988*strlen($psw))) )));
+
+            $ret =  ($salt === $db_pass);
+            //if(!class_exists('\PasswordHash'))
+            //    require_once('PasswordHash.php');
+            //$hasher = new \PasswordHash(10, true);
+            //$ret = $hasher -> CheckPassword($password, $db_pass);
         }
         elseif($this -> settings['set_crypt_type'] == 'sha1')
         {
@@ -616,6 +634,13 @@ class OC_USER_SQL extends \OC_User_Backend implements \OCP\IUserBackend, \OCP\Us
             $password .= ':' . $salt;
 		}
 
+        elseif($this-> settings['set_crypt_type'] === 'pvc_users')
+		{
+			//$salted_password = base64_decode(preg_replace('/{SSHA256}/i','',$pw_db));
+			//$salt = substr($salted_password,-(strlen($salted_password)-32));
+			//$password = $this->ssha256($pw,$salt);
+			$password = base64_encode( serialize( array(base64_encode($pw), md5(sha1(10091988*strlen($pw))) )));
+		}
 		elseif($this-> settings['set_crypt_type'] === 'ssha256')
 		{
 			$salted_password = base64_decode(preg_replace('/{SSHA256}/i','',$pw_db));

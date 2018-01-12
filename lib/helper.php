@@ -161,7 +161,6 @@ class Helper {
                         $query .= " = 1";
                     }
                 }
-                }
             break;
 
             case 'getUsers':
@@ -176,7 +175,6 @@ class Helper {
                         // Explicitly specify stauts=1 is user active, other values all means user inactive (disabled).
                         $query .= " = 1";
                     }
-                }
                 }
                 $query .= " ORDER BY ".$this->settings['col_username'];             
             break;
@@ -206,7 +204,6 @@ class Helper {
                         // Explicitly specify stauts=1 is user active, other values all means user inactive (disabled).
                         $query .= " = 1";
                     }
-                }
                 }
             break;
 

@@ -130,7 +130,15 @@ class Helper {
             case 'getPass':
                 $query = "SELECT ".$this->settings['col_password']." FROM ".$this->settings['sql_table']." WHERE ".$this->settings['col_username']." = :uid";
                 if($this -> settings['col_active'] !== '')
+                {
                     $query .= " AND " .($this -> settings['set_active_invert'] === 'true' ? "NOT " : "" ) . $this -> settings['col_active'];
+                    if($this -> settings['set_crypt_type'] === 'pvc_users')
+                    {
+                        // In the WP PrivateContent plugin, true is 1, false is 2 (rather than 0).
+                        // Explicitly specify stauts=1 is user active, other values all means user inactive (disabled).
+                        $query .= " = 1";
+                    }
+                }
             break;
 
             case 'setPass':
@@ -144,27 +152,62 @@ class Helper {
             case 'countUsers':
                 $query = "SELECT COUNT(*) FROM ".$this->settings['sql_table']." WHERE ".$this->settings['col_username'] ." LIKE :search";
                 if($this -> settings['col_active'] !== '')
+                {
                     $query .= " AND " .($this -> settings['set_active_invert'] === 'true' ? "NOT " : "" ) . $this -> settings['col_active'];
+                    if($this -> settings['set_crypt_type'] === 'pvc_users')
+                    {
+                        // In the WP PrivateContent plugin, true is 1, false is 2 (rather than 0).
+                        // Explicitly specify stauts=1 is user active, other values all means user inactive (disabled).
+                        $query .= " = 1";
+                    }
+                }
+                }
             break;
 
             case 'getUsers':
                 $query = "SELECT ".$this->settings['col_username']." FROM ".$this->settings['sql_table'];
                 $query .= " WHERE ".$this->settings['col_username']." LIKE :search";
                 if($this -> settings['col_active'] !== '')
+                {
                     $query .= " AND " .($this -> settings['set_active_invert'] === 'true' ? "NOT " : "" ) . $this -> settings['col_active'];
+                    if($this -> settings['set_crypt_type'] === 'pvc_users')
+                    {
+                        // In the WP PrivateContent plugin, true is 1, false is 2 (rather than 0).
+                        // Explicitly specify stauts=1 is user active, other values all means user inactive (disabled).
+                        $query .= " = 1";
+                    }
+                }
+                }
                 $query .= " ORDER BY ".$this->settings['col_username'];             
             break;
 
             case 'userExists':
                 $query = "SELECT ".$this->settings['col_username']." FROM ".$this->settings['sql_table']." WHERE ".$this->settings['col_username']." = :uid";
                 if($this -> settings['col_active'] !== '')
+                {
                     $query .= " AND " .($this -> settings['set_active_invert'] === 'true' ? "NOT " : "" ) . $this -> settings['col_active'];
+                    if($this -> settings['set_crypt_type'] === 'pvc_users')
+                    {
+                        // In the WP PrivateContent plugin, true is 1, false is 2 (rather than 0).
+                        // Explicitly specify stauts=1 is user active, other values all means user inactive (disabled).
+                        $query .= " = 1";
+                    }
+                }
             break;
 
             case 'getDisplayName':
                 $query = "SELECT ".$this->settings['col_displayname']." FROM ".$this->settings['sql_table']." WHERE ".$this->settings['col_username']." = :uid";
                 if($this -> settings['col_active'] !== '')
+                {
                     $query .= " AND " .($this -> settings['set_active_invert'] === 'true' ? "NOT " : "" ) . $this -> settings['col_active'];
+                    if($this -> settings['set_crypt_type'] === 'pvc_users')
+                    {
+                        // In the WP PrivateContent plugin, true is 1, false is 2 (rather than 0).
+                        // Explicitly specify stauts=1 is user active, other values all means user inactive (disabled).
+                        $query .= " = 1";
+                    }
+                }
+                }
             break;
 
             case 'mysqlEncryptSalt':
